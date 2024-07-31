@@ -1,0 +1,30 @@
+{
+   "adminlanguage":"en",
+   "nostr":"false",
+   "local":"false",
+
+    "Headernavigation":{
+       "basicmenu":[
+        {
+           "name":"Home",
+           "href":"/admin"
+        },
+          {
+             "name":"My Posts",
+             "href":"/admin/posts"
+          },
+          {
+            "name":"My Shop",
+            "href":"/admin/shop"
+         },
+         {
+            "name":"Settings",
+            "href":"/admin/settings"
+         },
+         {
+            "name":"FAQ",
+            "href":"/admin/faq"
+         }
+       ]
+    }
+  }
