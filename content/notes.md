@@ -21,10 +21,4 @@ head:
 
 ---
 
-
-
-:BlogFeatured
-
-
-
-:BlogFeed
+:NostrLongform

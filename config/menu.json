@@ -4,13 +4,9 @@
          {
             "name":"Home",
             "href":"/"
-         },
-           {
-              "name":"Product",
-              "href":"/product"
-           }
+         }
         ],
-        "bloglabel": "Blog",
+        "bloglabel": "Notes",
         "shoplabel":"Shop",
         "MenuPopupName":"",
         "MenuPopup":[

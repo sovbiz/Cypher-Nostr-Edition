@@ -1,15 +1,9 @@
 [
    {
       "id": 1,
-      "type": "Product",
       "category": [
-         "t-shirt"     ],
+              ],
       "variations": [
-         "xs",
-         "sm",
-         "md",
-         "lg",
-         "xl"
       ],
       "title": "T-Shirt #1",
       "description": "This is a demo product.",
@@ -20,168 +14,11 @@
       "shipprice": 0.00000001,
       "images": [
          {
-            "id": 1,
-            "src": "/stock/product1/1.jpg",
-            "alt": "Lady wearing T-shirt"
-         },
-         {
-            "id": 2,
-            "src": "/stock/product1/2.jpg",
-            "alt": "Guy wearing T-shirt"
-         },
-         {
-            "id": 3,
-            "src": "/stock/product1/3.jpg",
-            "alt": "Guy standing wearing T-shirt"
-         },
-         {
-            "id": 4,
-            "src": "/stock/product1/4.jpg",
-            "alt": "Coathanger T-shirt"
          }
-      ],
-      "features": [
-         "Breathable fabric",
-         "Crew neck",
-         "Short sleeves",
-         "Maybe some other thing "
-      ]
-   }, 
-   {
-      "id": 2,
-      "type": "Product",
-      "category": [
-         "stickers"      ],
-      "variations": [
 
       ],
-      "title": "Blazing Block Sticker",
-      "description": "This is a new demo product.",
-      "fulldescription": "<h1>Block Sticker </h1>    <p>Add a touch of fun to your belongings with this vibrant emoji sticker! Perfect for decorating laptops, notebooks, and more, this sticker is made from durable, high-quality vinyl that resists scratches, water, and sunlight.</p>     ",
-      "stock": 2,
-      "inStock": true,
-      "price": 0.0000003,
-      "shipprice": 0.00000003,
-      "images": [
-         {
-            "id": 1,
-            "src": "/stock/product2/1.jpg",
-            "alt": "Sticker next to trackpad"
-         },
-         {
-            "id": 2,
-            "src": "/stock/product2/2.jpg",
-            "alt": "Sticker on laptop"
-         },
-         {
-            "id": 3,
-            "src": "/stock/product2/3.jpg",
-            "alt": "Just the sticker Sticker "
-         }
-      ],
       "features": [
-         "Scratch-resistant", 
-         "water-resistant", 
-         "UV-protected"
-      ]
-   },
-   {
-      "id": 3,
-      "type": "Product",
-      "category": [
-         "t-shirt"      ],
-      "variations": [
-         "sm",
-         "md"
-      ],
-      "title": "T-Shirt #2",
-      "description": "T-shirt only in small & medium.",
-      "fulldescription": "<h1>The Second Shirt </h1>    <p>This classic cotton T-shirt is a staple for any wardrobe. Made from 100% organic cotton, it offers both comfort and durability. Available in multiple colors, this tee is perfect for any casual occasion.</p>      ",
-      "stock": 0,
-      "inStock": false,
-      "price": 0.0000004,
-      "shipprice": 0.00000008,
-      "images": [
-         {
-            "id": 1,
-            "src": "/stock/product3/1.jpg",
-            "alt": "Guy wearing T-shirt"
-         },
-         {
-            "id": 2,
-            "src": "/stock/product3/2.jpg",
-            "alt": "Just the T-shirt"
-         },
-         {
-            "id": 3,
-            "src": "/stock/product3/3.jpg",
-            "alt": "Guy wearing T-shirt urban "
-         }
-      ],
-      "features": [
-         "Breathable fabric",
-         "Crew neck",
-         "Short sleeves",
-         "Maybe some other thing else"
-      ]
-   },
-   {
-      "id": 4,
-      "type": "Product",
-      "category": [
-         "new"      ],
-      "variations": [
-      ],      
-      "title": "Cypher Snapback Hat",
-      "description": "New Demo Hat",
-      "fulldescription": "<h1>Cypher Cap </h1> <p>Shield yourself from the sun in style with our durable baseball cap! Made from high-quality materials, this cap ensures comfort and protection while maintaining a stylish edge. Ideal for outdoor activities or everyday wear.</p> ",
-      "stock": 0,
-      "inStock": false,
-      "price": 0.0000003,
-      "shipprice": 0.00000002,
-      "images": [
-         {
-            "id": 1,
-            "src": "/stock/product4/1.jpg",
-            "alt": "Snapback Hat"
-         },
-         {
-            "id": 2,
-            "src": "/stock/product4/2.jpg",
-            "alt": "Guy wearing Snapback"
-         }
-      ],
-      "features": [
-         "Adjustable strap", 
-         "Breathable fabric", 
-         "Curved visor"
-      ]
-   },
-   {
-      "id": 5,
-      "type": "Product",
-      "category": [
-         "new"      ],
-      "variations": [
-      ],      
-      "title": "Cypher Snapback Hat",
-      "description": "New Demo Hat",
-      "fulldescription": "<h1>Cypher Cap </h1> <p>Shield yourself from the sun in style with our durable baseball cap! Made from high-quality materials, this cap ensures comfort and protection while maintaining a stylish edge. Ideal for outdoor activities or everyday wear.</p> ",
-      "stock": 10,
-      "inStock": true,
-      "price": 0.0000005,
-      "shipprice": 0.00000001,
-      "images": [
-         {
-            "id": 1,
-            "src": "",
-            "alt": ""
-         }
-      ],
-      "features": [
-         "Adjustable strap", 
-         "Breathable fabric", 
-         "Curved visor"
+
       ]
    }
 ]

@@ -20,9 +20,6 @@ head:
       content: '© 2024 cypher'
 
 ---
+:NostrProfile
 
-:Hero 
-
-:ShopNew{category="new"}
-
-:BlogFeatured
+:NostrFeed

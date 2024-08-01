@@ -1,7 +1,7 @@
 <template>
   <div class="bg-colorBgLight dark:bg-colorBgDark min-h-screen">
-    <Maintenance v-if="!data.maintenancemode" />
-    <AdminSetup v-if="!data.initsetup" />
+    <Maintenance v-if="data.maintenancemode" />
+    <!-- <AdminSetup v-if="!data.initsetup" /> -->
     <Header />
 
     <main

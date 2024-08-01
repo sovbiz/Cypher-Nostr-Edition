@@ -34,6 +34,26 @@ import { useProjectStore } from "~/store/shopcart";
 const store = useProjectStore();
 const totalItems = ref(store.getTotalItems());
 
+import NDK from "@nostr-dev-kit/ndk";
+import { bech32 } from "bech32";
+
+const bytesToHex = (bytes) => {
+  return Array.from(bytes)
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
+};
+
+const npubToHex = (npub) => {
+  const decoded = bech32.decode(npub);
+  const pubkeyBytes = bech32.fromWords(decoded.words);
+  return bytesToHex(Uint8Array.from(pubkeyBytes));
+};
+
+const skHex = npubToHex(data.nostradmin);
+
+const fetchedEvent = ref('');
+
+
 // Watch for changes in the cartItems array
 watch(
   () => store.cartItems,
@@ -43,9 +63,46 @@ watch(
   { deep: true }
 );
 
-onMounted(() => {
-  totalItems.value = store.getTotalItems();
+
+
+
+watch(fetchedEvent, (newVal) => {
+  if (newVal) {
+    try {
+      eventData.value = JSON.parse(newVal);
+    } catch (error) {
+      console.error('Error parsing event data:', error);
+      eventData.value = null;
+    }
+  }
 });
+
+
+
+onMounted(async () => {
+  totalItems.value = store.getTotalItems();
+
+  const ndk = new NDK({ explicitRelayUrls: data.relays });
+
+  await ndk.connect();
+
+  const filter = { kinds: [0], authors: [skHex] };
+
+  const event = await ndk.fetchEvent(filter);
+
+  if (event && event.content) {
+    fetchedEvent.value = event.content;
+  } else {
+    fetchedEvent.value = 'No event content found';
+  }
+
+  console.log(fetchedEvent.value)
+
+});
+
+const eventData = ref(null);
+
+
 </script>
 
 <template>
@@ -60,7 +117,7 @@ onMounted(() => {
         <NuxtLink :to="localePath('/')" class="flex">
           <span class="sr-only">{{ data.name }}</span>
 
-          <img
+          <!-- <img
             v-if="data.logo"
             :class="[data.logodark ? 'block dark:hidden h-12' : '', '']"
             :src="'/project/' + data.logoimage"
@@ -71,12 +128,12 @@ onMounted(() => {
             class="hidden dark:block h-12"
             :src="'/project/' + data.logodarkimage"
             :alt="data.name"
-          />
+          /> -->
 
           <span
-            v-if="!data.logo"
-            class="m-2 ml-4 text-2xl font-black dark:text-white"
-            >{{ data.textlogo }}</span
+            v-if="eventData"
+            class="m-2 ml-4 text-2xl font-black dark:text-white uppercase"
+            >{{ eventData.name }}</span
           >
         </NuxtLink>
       </div>
@@ -133,7 +190,7 @@ onMounted(() => {
 
         <NuxtLink
           v-if="data.blog"
-          :to="localePath('/blog')"
+          :to="localePath('/notes')"
           class="text-sm font-semibold leading-6 text-black dark:text-white"
         >
           {{ menu.Headernavigation.bloglabel }}</NuxtLink
@@ -239,8 +296,7 @@ onMounted(() => {
         </NuxtLink>
 
         <a
-          v-if="data.nostr"
-          :href="links.nostr"
+          :href="'nostr:' +data.nostradmin"
           target="_blank"
           class="text-colorHighLight hover:text-colorHoverHighLight dark:text-colorHighDark dark:hover:text-colorHoverHighDark inline-block mx-3"
         >
@@ -303,6 +359,16 @@ onMounted(() => {
       >
         <div class="flex items-center justify-between">
           <NuxtLink to="/" class="-m-1.5 p-1.5">
+          <span
+            v-if="eventData"
+            class="m-2 ml-4 text-2xl font-black dark:text-white uppercase"
+            >{{ eventData.name }}</span
+          >
+        </NuxtLink>
+
+<!-- 
+
+
             <img
               class="h-12 w-auto hidden dark:block"
               :src="'/project/' + data.logodarkimage"
@@ -314,7 +380,7 @@ onMounted(() => {
               :src="'/project/' + data.logoimage"
               alt=""
             />
-          </NuxtLink>
+          -->
           <button
             type="button"
             class="-m-2.5 rounded-md p-2.5 text-gray-700 text-white dark:text-black"
@@ -351,7 +417,7 @@ onMounted(() => {
               <NuxtLink
                 v-if="data.blog"
                 class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-black dark:text-white"
-                :to="localePath('/blog')"
+                :to="localePath('/notes')"
                 @click="mobileMenuOpen = false"
               >
                 {{ menu.Headernavigation.bloglabel }}

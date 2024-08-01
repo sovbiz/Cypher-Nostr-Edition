@@ -2,7 +2,7 @@
   <div
     class="h-screen flex overflow-hidden bg-colorBgLight dark:bg-colorBgDark dark:text-white"
   >
-    <AdminSetup v-if="!data.initsetup" />
+    <!-- <AdminSetup v-if="!data.initsetup" /> -->
 
     <AdminMenu />
 

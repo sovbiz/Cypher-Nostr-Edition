@@ -1,7 +1,9 @@
 {
   "version": "1.0.2 Beta",
   "initsetup": true,
-  "maintenancemode": true,
+  "maintenancemode": false,
+  "nostradmin":"npub1equrmqway3qxw3dkssymusxkwgwrqypfgeqx0lx9pgjam7gnj4ysaqhkj6",
+  "relays":["wss://relay.damus.io"],
   "name":"Cypher.Space",
   "tagline":"Setup a Bitcoin Only Business",
   "textlogo":"CYPHER",
@@ -13,13 +15,14 @@
   "defaultlanguage":"en",
   "blog":true,
   "shop":true,
-  "contact":true,
+  "contact":false,
   "cart":"bitcoinconnect",
   "checkout":"full",
   "localid":"Name / Handle",
   "basecurrency":"btc",
   "lightningonly":"true",
   "fiat":{
+    "default":"EUR",
     "denomination": "BTC",
     "symbol": "€"
   },
@@ -28,8 +31,6 @@
   "lightningaddress":"cypher@npub.cash",
   "orderwebhook":"",
   "nostr":true,
-  "nostradmin":"npub1nkmta4dmsa7pj25762qxa6yqxvrhzn7ug0gz5frp9g7p3jdscnhsu049fn",
-  "nostrrelay":"wss://relay.damus.io",
   "footerlanguage":true,
   "footersocials":true,
   "footertheme":true,
@@ -42,6 +43,6 @@
      "dribble":"",
      "linkedin":"",
      "telegram":"",
-     "nostr":"https://nostrcheck.me/u/cypher"
+     "nostr":""
   }
 }
