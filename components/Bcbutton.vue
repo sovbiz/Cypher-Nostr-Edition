@@ -1,22 +1,37 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, defineProps } from 'vue';
 
 // Load the Bitcoin Connect API and launch the modal
 const loadBitcoinConnect = async () => {
   const { launchModal } = await import('https://esm.sh/@getalby/bitcoin-connect@3.5.3');
-    // launchModal()
+  // launchModal()
 };
 
 onMounted(() => {
   loadBitcoinConnect();
 });
 
-// Define the props for the button
-const invoice = ref('your-invoice-string');
-const title = ref('Pay with Bitcoin');
+// Define props with default values
+const props = defineProps({
+  invoice: {
+    type: String,
+    required: true, // This prop must be provided by the parent
+  },
+  title: {
+    type: String,
+    default: 'Pay with Bitcoin', // Default value if not provided
+  },
+  preimage: {
+    type: String,
+    default: "",
+  },
+});
+
 </script>
 
 <template>
-  <!-- Bitcoin Connect components are now available -->
-  <bc-pay-button :invoice="invoice" :title="title"></bc-pay-button>
+
+  <bc-pay-button :title="props.title" :invoice="props.invoice" :preimage="props.preimage">
+  </bc-pay-button>
+
 </template>

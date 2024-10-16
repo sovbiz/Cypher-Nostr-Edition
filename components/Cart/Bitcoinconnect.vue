@@ -1,88 +1,56 @@
 <template>
-  <div class="bg-colorBgLight dark:bg-colorBgDark" v-if="store.cartItems.length != 0 ">
+  <div class="bg-colorBgLight dark:bg-colorBgDark" v-if="store.cartItems.length != 0">
     <div class="mx-auto max-w-4xl px-4 py-16 sm:px-6 sm:py-12 lg:px-8">
       <div class="mt-12" v-if="launchStep == '' || displaymode == true">
-        <h1
-          class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white"
-        >
+        <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
           {{ t("Shopcart") }}
         </h1>
 
         <div>
           <h2 class="sr-only">Items in your shopping cart</h2>
 
-          <ul
-            role="list"
-            class="divide-y divide-gray-200 border-b border-t border-gray-200"
-          >
-            <li
-              v-for="(product, productIdx) in cartItems"
-              :key="product.id"
-              class="flex py-6 sm:py-10"
-            >
+          <ul role="list" class="divide-y divide-gray-200 border-b border-t border-gray-200">
+            <li v-for="(product, productIdx) in cartItems" :key="product.id" class="flex py-6 sm:py-10">
               <div class="flex-shrink-0" v-if="product.image">
-                <img
-                  :src="product.image"
-                  :alt="product.image"
-                  class="h-24 w-24 rounded-lg object-cover object-center sm:h-32 sm:w-32"
-                />
+                <img :src="product.image" :alt="product.image"
+                  class="h-24 w-24 rounded-lg object-cover object-center sm:h-32 sm:w-32" />
               </div>
 
-              <div
-                class="relative ml-4 flex flex-1 flex-col justify-between sm:ml-6"
-              >
+              <div class="relative ml-4 flex flex-1 flex-col justify-between sm:ml-6">
                 <div>
                   <div class="flex justify-between sm:grid sm:grid-cols-2">
                     <div class="pr-6">
                       <h3 class="text-sm">
-                        <a
-                          :href="product.href"
-                          class="font-medium text-3xl text-gray-700 hover:text-gray-800 dark:text-white"
-                          >{{ product.title }}</a
-                        >
+                        <a :href="product.href"
+                          class="font-medium text-3xl text-gray-700 hover:text-gray-800 dark:text-white">{{
+                            product.title }}</a>
                       </h3>
 
                       <h3 class="text-sm">
-                        <a
-                          class="font-medium text-2xl text-gray-700 hover:text-gray-800 dark:text-white"
-                          >{{ product.variation }}</a
-                        >
+                        <a class="font-medium text-2xl text-gray-700 hover:text-gray-800 dark:text-white">{{
+                          product.variation }}</a>
                       </h3>
                     </div>
 
-                    <p
-                      v-if="filtersList == 'Bitcoin'"
-                      class="text-right text-lg font-medium text-gray-900 dark:text-white"
-                    >
+                    <p v-if="filtersList == 'Bitcoin'"
+                      class="text-right text-lg font-medium text-gray-900 dark:text-white">
                       {{ (product.price * btcprices).toFixed(8) }}
-                      <BitcoinIcon
-                        class="h-6 w-6 inline -mt-1"
-                        aria-hidden="true"
-                      />
+                      <BitcoinIcon class="h-6 w-6 inline -mt-1" aria-hidden="true" />
                     </p>
 
-                    <p
-                      v-if="filtersList == 'Sats'"
-                      class="text-right text-lg font-medium text-gray-900 dark:text-white"
-                    >
+                    <p v-if="filtersList == 'Sats'"
+                      class="text-right text-lg font-medium text-gray-900 dark:text-white">
                       {{ (product.price * btcprices * 100000000).toFixed(0) }}
-                      <SatoshiV2Icon
-                        class="h-6 w-6 inline -mt-1"
-                        aria-hidden="true"
-                      />
+                      <SatoshiV2Icon class="h-6 w-6 inline -mt-1" aria-hidden="true" />
                     </p>
 
-                    <p
-                      v-if="filtersList == 'Fiat' && ticker.fiat.denomination != 'BTC'"
-                      class="text-right text-xl font-medium text-gray-900 dark:text-white"
-                    >
+                    <p v-if="filtersList == 'Fiat' && ticker.fiat.denomination != 'BTC'"
+                      class="text-right text-xl font-medium text-gray-900 dark:text-white">
                       {{ product.price }} {{ ticker.fiat.symbol }}
                     </p>
 
-                    <p
-                      v-if="filtersList == 'Fiat' && ticker.fiat.denomination == 'BTC'"
-                      class="text-right text-xl font-medium text-gray-900 dark:text-white"
-                    >
+                    <p v-if="filtersList == 'Fiat' && ticker.fiat.denomination == 'BTC'"
+                      class="text-right text-xl font-medium text-gray-900 dark:text-white">
                       {{ (product.price * btcusdprices).toFixed(2) }} $
                     </p>
 
@@ -91,24 +59,17 @@
 
                   </div>
 
-                  <div
-                    class="mt-4 flex items-center sm:absolute sm:left-1/2 sm:top-0 sm:mt-0 sm:block"
-                  >
-                    <label
-                      :for="`quantity-${productIdx}`"
-                      class="block max-w-full py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm dark:text-white"
-                      >{{ t("Quantity") }}: {{ product.amount }}</label
-                    >
+                  <div class="mt-4 flex items-center sm:absolute sm:left-1/2 sm:top-0 sm:mt-0 sm:block">
+                    <label :for="`quantity-${productIdx}`"
+                      class="block max-w-full py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm dark:text-white">{{
+                        t("Quantity") }}: {{ product.amount }}</label>
 
-                    <button
-                      @click="
-                        removeFromCart(
-                          (id = product.id),
-                          (variation = product.variation)
-                        )
-                      "
-                      class="ml-4 text-sm font-medium text-indigo-600 hover:text-indigo-500 sm:ml-0 sm:mt-3"
-                    >
+                    <button @click="
+                      removeFromCart(
+                        (id = product.id),
+                        (variation = product.variation)
+                      )
+                      " class="ml-4 text-sm font-medium text-indigo-600 hover:text-indigo-500 sm:ml-0 sm:mt-3">
                       <span>{{ t("Remove") }}</span>
                     </button>
                   </div>
@@ -137,40 +98,24 @@
                   </dt>
                   <!-- <dd class="text-base font-medium text-gray-900">{{ totalPrice }} $</dd> -->
 
-                  <dd
-                    v-if="filtersList == 'Bitcoin'"
-                    class="text-right text-xl font-medium text-gray-900"
-                  >
+                  <dd v-if="filtersList == 'Bitcoin'" class="text-right text-xl font-medium text-gray-900">
                     {{ (totalPrice * btcprices).toFixed(8) }}
-                    <BitcoinIcon
-                      class="h-6 w-6 inline -mt-2"
-                      aria-hidden="true"
-                    />
+                    <BitcoinIcon class="h-6 w-6 inline -mt-2" aria-hidden="true" />
                   </dd>
 
-                  <dd
-                    v-if="filtersList == 'Sats'"
-                    class="text-right text-xl font-medium text-gray-900"
-                  >
+                  <dd v-if="filtersList == 'Sats'" class="text-right text-xl font-medium text-gray-900">
                     {{ (totalPrice * btcprices * 100000000).toFixed(0) }}
-                    <SatoshiV2Icon
-                      class="h-6 w-6 inline -mt-2"
-                      aria-hidden="true"
-                    />
+                    <SatoshiV2Icon class="h-6 w-6 inline -mt-2" aria-hidden="true" />
                   </dd>
 
-                  <dd
-                    v-if="filtersList == 'Fiat' && ticker.fiat.denomination != 'BTC'"
-                    class="text-right text-xl font-medium text-gray-900"
-                  >
+                  <dd v-if="filtersList == 'Fiat' && ticker.fiat.denomination != 'BTC'"
+                    class="text-right text-xl font-medium text-gray-900">
                     {{ totalPrice }} {{ ticker.fiat.symbol }}
                   </dd>
 
 
-                  <dd
-                    v-if="filtersList == 'Fiat' && ticker.fiat.denomination == 'BTC'"
-                    class="text-right text-xl font-medium text-gray-900"
-                  >
+                  <dd v-if="filtersList == 'Fiat' && ticker.fiat.denomination == 'BTC'"
+                    class="text-right text-xl font-medium text-gray-900">
                     {{ (totalPrice * btcusdprices).toFixed(2) }} $
                   </dd>
 
@@ -188,27 +133,19 @@
 
           <!-- SHIPPING INFO -->
 
-          <div
-            class="px-4 pb-24 pt-16 sm:px-6 sm:pt-12 lg:px-8 lg:py-16 rounded-3xl border-4 border-gray-600 mt-4"
-          >
+          <div class="px-4 pb-24 pt-16 sm:px-6 sm:pt-12 lg:px-8 lg:py-16 rounded-3xl border-4 border-gray-600 mt-4">
             <p class="mt-2 text-4xl font-bold tracking-tight">
               Delivery Options
             </p>
 
             <section aria-labelledby="shipping-heading" class="mt-10">
               <div class="text-center" v-if="data.checkout == 'full'">
-                <button
-                  v-if="data.checkout == 'full' || data.checkout == 'local'"
-                  @click="toggleLocal"
-                  class="px-4 my-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 mr-6"
-                >
+                <button v-if="data.checkout == 'full' || data.checkout == 'local'" @click="toggleLocal"
+                  class="px-4 my-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 mr-6">
                   📍 Local Pickup
                 </button>
-                <button
-                  v-if="data.checkout == 'full' || data.checkout == 'ship'"
-                  @click="toggleShipping"
-                  class="px-4 my-4 py-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
-                >
+                <button v-if="data.checkout == 'full' || data.checkout == 'ship'" @click="toggleShipping"
+                  class="px-4 my-4 py-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75">
                   ⛴️ Shipping
                 </button>
               </div>
@@ -216,17 +153,10 @@
               <div class="rounded-md bg-red-50 p-4" v-if="missingInfo == true">
                 <div class="flex">
                   <div class="flex-shrink-0">
-                    <svg
-                      class="h-5 w-5 text-red-400"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        fill-rule="evenodd"
+                    <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path fill-rule="evenodd"
                         d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
-                        clip-rule="evenodd"
-                      />
+                        clip-rule="evenodd" />
                     </svg>
                   </div>
                   <div class="ml-3">
@@ -243,231 +173,118 @@
                 </div>
               </div>
 
-              <div
-                v-if="isLocalVisible || data.checkout == 'local'"
-                class="toggle-div"
-              >
-                <div
-                  v-if="data.checkout == 'full' || data.checkout == 'local'"
-                  class="mt-6 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-4"
-                >
-                  <h2
-                    id="shipping-heading"
-                    class="text-lg font-medium text-gray-900 dark:text-white sm:col-span-4"
-                  >
+              <div v-if="isLocalVisible || data.checkout == 'local'" class="toggle-div">
+                <div v-if="data.checkout == 'full' || data.checkout == 'local'"
+                  class="mt-6 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-4">
+                  <h2 id="shipping-heading" class="text-lg font-medium text-gray-900 dark:text-white sm:col-span-4">
                     Local Pickup
                   </h2>
 
                   <div class="sm:col-span-2">
-                    <label
-                      class="block text-sm font-medium text-gray-700 dark:text-white"
-                      >{{ data.localid }}</label
-                    >
+                    <label class="block text-sm font-medium text-gray-700 dark:text-white">{{ data.localid }}</label>
                     <div class="mt-1">
-                      <input
-                        v-model="localidentity"
-                        type="text"
-                        id=""
-                        name=""
-                        autocomplete=""
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-black"
-                      />
+                      <input v-model="localidentity" type="text" id="" name="" autocomplete=""
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-black" />
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div
-                v-if="isShippingVisible || data.checkout == 'ship'"
-                class="toggle-div"
-              >
-                <div
-                  v-if="data.checkout == 'full' || data.checkout == 'ship'"
-                  class="mt-6 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-4"
-                >
-                  <h2
-                    id="shipping-heading"
-                    class="text-lg font-medium text-gray-900 dark:text-white sm:col-span-4"
-                  >
+              <div v-if="isShippingVisible || data.checkout == 'ship'" class="toggle-div">
+                <div v-if="data.checkout == 'full' || data.checkout == 'ship'"
+                  class="mt-6 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-4">
+                  <h2 id="shipping-heading" class="text-lg font-medium text-gray-900 dark:text-white sm:col-span-4">
                     {{ t("ShippingAddress") }}
                   </h2>
 
                   <div class="sm:col-span-2">
-                    <label
-                      for="firstname"
-                      class="block text-sm font-medium text-gray-700 dark:text-white"
-                      >{{ t("FirstName") }}</label
-                    >
+                    <label for="firstname" class="block text-sm font-medium text-gray-700 dark:text-white">{{
+                      t("FirstName") }}</label>
                     <div class="mt-1">
-                      <input
-                        type="text"
-                        v-model="firstname"
-                        id="firstname"
-                        name="firstname"
-                        autocomplete="firstname"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-black"
-                      />
+                      <input type="text" v-model="firstname" id="firstname" name="firstname" autocomplete="firstname"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-black" />
                     </div>
                   </div>
 
                   <div class="sm:col-span-2">
-                    <label
-                      for="lastname"
-                      class="block text-sm font-medium text-gray-700 dark:text-white"
-                      >{{ t("LastName") }}</label
-                    >
+                    <label for="lastname" class="block text-sm font-medium text-gray-700 dark:text-white">{{
+                      t("LastName") }}</label>
                     <div class="mt-1">
-                      <input
-                        type="text"
-                        v-model="lastname"
-                        id="lastname"
-                        name="lastname"
-                        autocomplete="lastname"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-black"
-                      />
+                      <input type="text" v-model="lastname" id="lastname" name="lastname" autocomplete="lastname"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-black" />
                     </div>
                   </div>
 
                   <div class="sm:col-span-2">
-                    <label
-                      for="company"
-                      class="block text-sm font-medium text-gray-700 dark:text-white"
-                      >{{ t("Company") }}</label
-                    >
+                    <label for="company" class="block text-sm font-medium text-gray-700 dark:text-white">{{ t("Company")
+                      }}</label>
                     <div class="mt-1">
-                      <input
-                        type="text"
-                        v-model="company"
-                        id="company"
-                        name="company"
-                        autocomplete="comapany"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-black"
-                      />
+                      <input type="text" v-model="company" id="company" name="company" autocomplete="comapany"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-black" />
                     </div>
                   </div>
 
                   <div class="sm:col-span-2">
-                    <label
-                      for="email"
-                      class="block text-sm font-medium text-gray-700 dark:text-white"
-                      >{{ t("Email") }}</label
-                    >
+                    <label for="email" class="block text-sm font-medium text-gray-700 dark:text-white">{{ t("Email")
+                      }}</label>
                     <div class="mt-1">
-                      <input
-                        type="text"
-                        v-model="email"
-                        id="email"
-                        name="email"
-                        autocomplete="email"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-black"
-                      />
+                      <input type="text" v-model="email" id="email" name="email" autocomplete="email"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-black" />
                     </div>
                   </div>
 
                   <div class="sm:col-span-4">
-                    <label
-                      for="address"
-                      class="block text-sm font-medium text-gray-700 dark:text-white"
-                      >{{ t("Address") }}</label
-                    >
+                    <label for="address" class="block text-sm font-medium text-gray-700 dark:text-white">{{ t("Address")
+                      }}</label>
                     <div class="mt-1">
-                      <input
-                        type="text"
-                        v-model="address"
-                        id="address"
-                        name="address"
-                        autocomplete="street-address"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-black"
-                      />
+                      <input type="text" v-model="address" id="address" name="address" autocomplete="street-address"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-black" />
                     </div>
                   </div>
 
                   <div class="sm:col-span-4">
-                    <label
-                      for="apartment"
-                      class="block text-sm font-medium text-gray-700 dark:text-white"
-                      >{{ t("Addition") }}</label
-                    >
+                    <label for="apartment" class="block text-sm font-medium text-gray-700 dark:text-white">{{
+                      t("Addition") }}</label>
                     <div class="mt-1">
-                      <input
-                        type="text"
-                        v-model="apartment"
-                        id="apartment"
-                        name="apartment"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-black"
-                      />
+                      <input type="text" v-model="apartment" id="apartment" name="apartment"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-black" />
                     </div>
                   </div>
 
                   <div class="sm:col-span-2">
-                    <label
-                      for="city"
-                      class="block text-sm font-medium text-gray-700 dark:text-white"
-                      >{{ t("City") }}</label
-                    >
+                    <label for="city" class="block text-sm font-medium text-gray-700 dark:text-white">{{ t("City")
+                      }}</label>
                     <div class="mt-1">
-                      <input
-                        type="text"
-                        v-model="city"
-                        id="city"
-                        name="city"
-                        autocomplete="address-level2"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-black"
-                      />
+                      <input type="text" v-model="city" id="city" name="city" autocomplete="address-level2"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-black" />
                     </div>
                   </div>
 
                   <div class="sm:col-span-2">
-                    <label
-                      for="postal-code"
-                      class="block text-sm font-medium text-gray-700 dark:text-white"
-                      >{{ t("Postcode") }}</label
-                    >
+                    <label for="postal-code" class="block text-sm font-medium text-gray-700 dark:text-white">{{
+                      t("Postcode") }}</label>
                     <div class="mt-1">
-                      <input
-                        type="text"
-                        v-model="postalcode"
-                        id="postal-code"
-                        name="postal-code"
+                      <input type="text" v-model="postalcode" id="postal-code" name="postal-code"
                         autocomplete="postal-code"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-black"
-                      />
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-black" />
                     </div>
                   </div>
 
                   <div class="sm:col-span-2">
-                    <label
-                      for="region"
-                      class="block text-sm font-medium text-gray-700 dark:text-white"
-                      >{{ t("StateProvince") }}</label
-                    >
+                    <label for="region" class="block text-sm font-medium text-gray-700 dark:text-white">{{
+                      t("StateProvince") }}</label>
                     <div class="mt-1">
-                      <input
-                        type="text"
-                        v-model="region"
-                        id="region"
-                        name="region"
-                        autocomplete="address-level1"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-black"
-                      />
+                      <input type="text" v-model="region" id="region" name="region" autocomplete="address-level1"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-black" />
                     </div>
                   </div>
 
                   <div class="sm:col-span-2">
-                    <label
-                      for="country"
-                      class="block text-sm font-medium text-gray-700 dark:text-white"
-                      >{{ t("Country") }}</label
-                    >
+                    <label for="country" class="block text-sm font-medium text-gray-700 dark:text-white">{{ t("Country")
+                      }}</label>
                     <div class="mt-1">
-                      <input
-                        type="text"
-                        v-model="country"
-                        id="country"
-                        name="country"
-                        autocomplete="country"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-black"
-                      />
+                      <input type="text" v-model="country" id="country" name="country" autocomplete="country"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-black" />
                     </div>
                   </div>
                 </div>
@@ -476,18 +293,13 @@
 
             <!-- END SHIPPING INFO -->
 
-            <div
-              class="mt-10"
-              v-if="
-                isLocalVisible !== false ||
-                isShippingVisible !== false ||
-                data.checkout !== 'full'
-              "
-            >
-              <button
-                @click="orderView()"
-                class="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
-              >
+            <div class="mt-10" v-if="
+              isLocalVisible !== false ||
+              isShippingVisible !== false ||
+              data.checkout !== 'full'
+            ">
+              <button @click="orderView()"
+                class="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">
                 {{ t("ContinueOrder") }}
               </button>
             </div>
@@ -495,10 +307,7 @@
 
           <div class="mt-6 text-center text-sm text-gray-500">
             <p>
-              <NuxtLink
-                :to="localePath('/shop')"
-                class="font-medium text-indigo-600 hover:text-indigo-500"
-              >
+              <NuxtLink :to="localePath('/shop')" class="font-medium text-indigo-600 hover:text-indigo-500">
                 {{ t("ContinueShop") }}
                 <span aria-hidden="true"> &rarr;</span>
               </NuxtLink>
@@ -512,14 +321,10 @@
         <div class="" v-if="launchStep == 'view' || displaymode == true">
           <!-- ORDER OVERVIEW -->
 
-          <div
-            class="px-4 pb-24 pt-16 sm:px-6 sm:pt-24 lg:px-8 lg:py-16 rounded-3xl border-4 border-gray-600 mt-4"
-          >
+          <div class="px-4 pb-24 pt-16 sm:px-6 sm:pt-24 lg:px-8 lg:py-16 rounded-3xl border-4 border-gray-600 mt-4">
             <div class="mx-auto max-w-3xl">
               <div class="max-w-3xl">
-                <h1
-                  class="text-base font-medium text-indigo-600 dark:text-white"
-                >
+                <h1 class="text-base font-medium text-indigo-600 dark:text-white">
                   {{ t("thank_you_note") }}
                 </h1>
                 <p class="mt-2 text-4xl font-bold tracking-tight">
@@ -530,23 +335,13 @@
                   {{ t("confirmation_note") }}
                 </p>
 
-                <div
-                  class="border-l-4 border-yellow-400 bg-yellow-50 p-4 mt-6"
-                  v-if="comply == true"
-                >
+                <div class="border-l-4 border-yellow-400 bg-yellow-50 p-4 mt-6" v-if="comply == true">
                   <div class="flex">
                     <div class="flex-shrink-0">
-                      <svg
-                        class="h-5 w-5 text-yellow-400"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        aria-hidden="true"
-                      >
-                        <path
-                          fill-rule="evenodd"
+                      <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd"
                           d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"
-                          clip-rule="evenodd"
-                        />
+                          clip-rule="evenodd" />
                       </svg>
                     </div>
                     <div class="ml-3">
@@ -563,91 +358,57 @@
       </dl> -->
               </div>
 
-              <section
-                aria-labelledby="order-heading"
-                class="mt-10 border-t border-gray-200"
-              >
+              <section aria-labelledby="order-heading" class="mt-10 border-t border-gray-200">
                 <h2 id="order-heading" class="sr-only">Your order</h2>
 
                 <h3 class="sr-only">Items</h3>
 
-                <ul
-                  role="list"
-                  class="divide-y divide-gray-200 border-b border-t border-gray-200"
-                >
-                  <li
-                    v-for="(product, productIdx) in cartItems"
-                    :key="product.id"
-                    class="flex py-6 sm:py-10 border-b border-gray-200 py-10"
-                  >
+                <ul role="list" class="divide-y divide-gray-200 border-b border-t border-gray-200">
+                  <li v-for="(product, productIdx) in cartItems" :key="product.id"
+                    class="flex py-6 sm:py-10 border-b border-gray-200 py-10">
                     <div class="flex-shrink-0">
-                      <img
-                        :src="product.image"
-                        :alt="product.image"
-                        class="h-24 w-24 rounded-lg object-cover object-center sm:h-32 sm:w-32"
-                      />
+                      <img :src="product.image" :alt="product.image"
+                        class="h-24 w-24 rounded-lg object-cover object-center sm:h-32 sm:w-32" />
                     </div>
 
-                    <div
-                      class="relative ml-4 flex flex-1 flex-col justify-between sm:ml-6"
-                    >
+                    <div class="relative ml-4 flex flex-1 flex-col justify-between sm:ml-6">
                       <div>
-                        <div
-                          class="flex justify-between sm:grid sm:grid-cols-2"
-                        >
+                        <div class="flex justify-between sm:grid sm:grid-cols-2">
                           <div class="pr-6">
                             <h3 class="text-sm">
-                              <a
-                                :href="product.href"
-                                class="font-medium text-3xl text-gray-700 hover:text-gray-800 dark:text-white"
-                                >{{ product.title }}</a
-                              >
+                              <a :href="product.href"
+                                class="font-medium text-3xl text-gray-700 hover:text-gray-800 dark:text-white">{{
+                                  product.title }}</a>
                             </h3>
 
                             <h3 class="text-sm">
-                              <a
-                                class="font-medium text-2xl text-gray-700 hover:text-gray-800 dark:text-white"
-                                >{{ product.variation }}</a
-                              >
+                              <a class="font-medium text-2xl text-gray-700 hover:text-gray-800 dark:text-white">{{
+                                product.variation }}</a>
                             </h3>
                           </div>
 
-                          <p
-                            v-if="filtersList == 'Bitcoin'"
-                            class="text-right text-lg font-medium text-gray-900 dark:text-white"
-                          >
+                          <p v-if="filtersList == 'Bitcoin'"
+                            class="text-right text-lg font-medium text-gray-900 dark:text-white">
                             {{ (product.price * btcprices).toFixed(8) }}
-                            <BitcoinIcon
-                              class="h-6 w-6 inline -mt-1"
-                              aria-hidden="true"
-                            />
+                            <BitcoinIcon class="h-6 w-6 inline -mt-1" aria-hidden="true" />
                           </p>
 
-                          <p
-                            v-if="filtersList == 'Sats'"
-                            class="text-right text-lg font-medium text-gray-900 dark:text-white"
-                          >
+                          <p v-if="filtersList == 'Sats'"
+                            class="text-right text-lg font-medium text-gray-900 dark:text-white">
                             {{
                               (product.price * btcprices * 100000000).toFixed(0)
                             }}
-                            <SatoshiV2Icon
-                              class="h-6 w-6 inline -mt-1"
-                              aria-hidden="true"
-                            />
+                            <SatoshiV2Icon class="h-6 w-6 inline -mt-1" aria-hidden="true" />
                           </p>
 
-                          <p
-                            v-if="filtersList == 'Fiat' && ticker.fiat.denomination != 'BTC'"
-                            class="text-right text-xl font-medium text-gray-900 dark:text-white"
-                          >
+                          <p v-if="filtersList == 'Fiat' && ticker.fiat.denomination != 'BTC'"
+                            class="text-right text-xl font-medium text-gray-900 dark:text-white">
                             {{ product.price }} {{ ticker.fiat.symbol }}
                           </p>
 
 
-                          <p
-                            v-if="filtersList == 'Fiat' && ticker.fiat.denomination == 'BTC'"
-                            class="text-right text-xl font-medium text-gray-900 dark:text-white"
-                          >
+                          <p v-if="filtersList == 'Fiat' && ticker.fiat.denomination == 'BTC'"
+                            class="text-right text-xl font-medium text-gray-900 dark:text-white">
                             {{ (product.price * btcusdprices).toFixed(2) }} $
                           </p>
 
@@ -657,14 +418,10 @@
 
                         </div>
 
-                        <div
-                          class="mt-4 flex items-center sm:absolute sm:left-1/2 sm:top-0 sm:mt-0 sm:block"
-                        >
-                          <label
-                            :for="`quantity-${productIdx}`"
-                            class="block max-w-full py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm dark:text-white"
-                            >{{ t("Quantity") }}: {{ product.amount }}</label
-                          >
+                        <div class="mt-4 flex items-center sm:absolute sm:left-1/2 sm:top-0 sm:mt-0 sm:block">
+                          <label :for="`quantity-${productIdx}`"
+                            class="block max-w-full py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm dark:text-white">{{
+                              t("Quantity") }}: {{ product.amount }}</label>
                         </div>
                       </div>
 
@@ -689,18 +446,12 @@
                         <dd class="mt-2 text-gray-700 dark:text-white">
                           <address class="not-italic">
                             <span class="block">
-                              {{ firstname }} {{ lastname }}</span
-                            >
-                            <span class="block"
-                              >{{ company }} {{ email }}
+                              {{ firstname }} {{ lastname }}</span>
+                            <span class="block">{{ company }} {{ email }}
                             </span>
-                            <span class="block"
-                              >{{ address }} {{ apartment }}</span
-                            >
-                            <span class="block"
-                              >{{ postalcode }} {{ city }}, {{ country }}
-                              {{ region }}</span
-                            >
+                            <span class="block">{{ address }} {{ apartment }}</span>
+                            <span class="block">{{ postalcode }} {{ city }}, {{ country }}
+                              {{ region }}</span>
                           </address>
                         </dd>
                       </div>
@@ -712,9 +463,8 @@
                           <address class="not-italic">
                             <span class="block">{{
                               t("free_global_shipping")
-                            }}</span>
-                            <span class="block"
-                              >{{ t("order_shipping_time") }}
+                              }}</span>
+                            <span class="block">{{ t("order_shipping_time") }}
                             </span>
                             <span class="block">{{ t("delivery_time") }}</span>
                           </address>
@@ -725,9 +475,7 @@
 
                   <h3 class="dark:text-white">{{ t("order_information") }}</h3>
 
-                  <dl
-                    class="space-y-6 border-t border-gray-200 dark:text-white pt-10 text-sm"
-                  >
+                  <dl class="space-y-6 border-t border-gray-200 dark:text-white pt-10 text-sm">
                     <div class="flex justify-between">
                       <dt class="font-medium text-gray-900 dark:text-white">
                         {{ t("timestamp") }}
@@ -761,10 +509,7 @@
                       </dt>
                       <dd class="text-gray-700 dark:text-white">
                         {{ (totalPrice * btcprices).toFixed(8) }}
-                        <BitcoinIcon
-                          class="h-6 w-6 inline -mt-1"
-                          aria-hidden="true"
-                        />
+                        <BitcoinIcon class="h-6 w-6 inline -mt-1" aria-hidden="true" />
                       </dd>
                     </div>
 
@@ -775,10 +520,7 @@
                       </dt>
                       <dd class="text-gray-700 dark:text-white">
                         {{ (totalShipPrice * btcprices).toFixed(8) }}
-                        <BitcoinIcon
-                          class="h-6 w-6 inline -mt-1"
-                          aria-hidden="true"
-                        />
+                        <BitcoinIcon class="h-6 w-6 inline -mt-1" aria-hidden="true" />
                       </dd>
                     </div>
 
@@ -787,11 +529,8 @@
                         Total Order BTC
                       </dt>
                       <dd class="text-gray-900 dark:text-white">
-                        {{ ((totalPrice + totalShipPrice) * btcprices).toFixed(8)  }} 
-                        <BitcoinIcon
-                          class="h-6 w-6 inline -mt-1"
-                          aria-hidden="true"
-                        />
+                        {{ ((totalPrice + totalShipPrice) * btcprices).toFixed(8) }}
+                        <BitcoinIcon class="h-6 w-6 inline -mt-1" aria-hidden="true" />
                       </dd>
                     </div>
 
@@ -799,34 +538,22 @@
                       <dt class="font-medium text-gray-900 dark:text-white">
                         {{ t("total_approximate_in_fiat") }}
                       </dt>
-                      <dd class="text-gray-900 dark:text-white"
-                      v-if="ticker.fiat.denomination != 'BTC'"
-                      >
+                      <dd class="text-gray-900 dark:text-white" v-if="ticker.fiat.denomination != 'BTC'">
                         {{ totalPrice.toFixed(2) }} {{ ticker.fiat.symbol }}
                       </dd>
-                      <dd class="text-gray-900 dark:text-white"
-                      v-if="ticker.fiat.denomination == 'BTC'">
+                      <dd class="text-gray-900 dark:text-white" v-if="ticker.fiat.denomination == 'BTC'">
                         {{ (totalPrice * btcusdprices).toFixed(2) }} $
                       </dd>
                     </div>
                   </dl>
 
                   <div class="mt-6" v-if="!payswitch">
-                    <input
-                      type="checkbox"
-                      v-model="ordercheck"
-                      class="inline-block mr-2"
-                    />
-                    <p class="inline text-black dark:text-white"> 
+                    <input type="checkbox" v-model="ordercheck" class="inline-block mr-2" />
+                    <p class="inline text-black dark:text-white">
                       {{ t("confirmation_agreement") }}
-                      <NuxtLink
-                        :to="localePath('/shipping')"
-                        class="underline"
-                        >{{ t("shipping") }}</NuxtLink
-                      >
+                      <NuxtLink :to="localePath('/shipping')" class="underline">{{ t("shipping") }}</NuxtLink>
                       &
-                      <NuxtLink :to="localePath('/tos')" class="underline"
-                        >{{ t("TOS") }}
+                      <NuxtLink :to="localePath('/tos')" class="underline">{{ t("TOS") }}
                       </NuxtLink>
                     </p>
                   </div>
@@ -835,27 +562,15 @@
             </div>
 
             <div class="mt-10" v-if="!payswitch">
-              <button
-                @click="paymentstart()"
-                class="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
-              >
+              <button @click="paymentstart()"
+                class="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">
                 {{ t("ContinuePay") }}
               </button>
             </div>
 
-
             <div class="mt-10 text-center" v-if="payswitch">
-
-              <Bcbutton :invoice="invoice" class="mx-auto" />
-
-
+              <Bcbutton :invoice="invoice" :preimage="preimage" class="mx-auto" />
             </div>
- 
-            
-
-
-
-
 
           </div>
 
@@ -867,20 +582,17 @@
     </div>
   </div>
   <div v-else class="text-center mt-12">
-    <p class="uppercase text-3xl">{{  t("Emptycart") }}</p>
+    <p class="uppercase text-3xl">{{ t("Emptycart") }}</p>
 
 
     <div class="mt-6 text-center text-sm text-gray-500">
-            <p>
-              <NuxtLink
-                :to="localePath('/shop')"
-                class="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                {{ t("ContinueShop") }}
-                <span aria-hidden="true"> &rarr;</span>
-              </NuxtLink>
-            </p>
-          </div>
+      <p>
+        <NuxtLink :to="localePath('/shop')" class="font-medium text-indigo-600 hover:text-indigo-500">
+          {{ t("ContinueShop") }}
+          <span aria-hidden="true"> &rarr;</span>
+        </NuxtLink>
+      </p>
+    </div>
 
 
 
@@ -958,7 +670,7 @@ const btcusdprice = await $fetch(
 
 const btcprice = await $fetch(
   "https://api.coinbase.com/v2/exchange-rates?currency=" +
-    ticker.fiat.denomination
+  ticker.fiat.denomination
 );
 
 const btcusdprices = Number(btcusdprice.data.rates.USD).toFixed(2);
@@ -985,11 +697,11 @@ function orderView() {
   if (isLocalVisible.value == true || data.checkout == "local") {
     if (localidentity.value !== "") {
       launchStep.value = "view";
-      if (isShippingVisible.value == true){
+      if (isShippingVisible.value == true) {
         totalPriceBtc.value = ((store.getTotalPrice() + store.getTotalShippingCost()) * btcprices).toFixed(8);
 
       }
-      else{
+      else {
         totalPriceBtc.value = (store.getTotalPrice() * btcprices).toFixed(8);
 
       }
@@ -1013,11 +725,11 @@ function orderView() {
     } else {
       //Continue with
       launchStep.value = "view";
-      if (isShippingVisible.value == true){
+      if (isShippingVisible.value == true) {
         totalPriceBtc.value = ((store.getTotalPrice() + store.getTotalShippingCost()) * btcprices).toFixed(8);
 
       }
-      else{
+      else {
         totalPriceBtc.value = (store.getTotalPrice() * btcprices).toFixed(8);
 
       }
@@ -1028,11 +740,8 @@ function orderView() {
 
 import { LightningAddress } from "@getalby/lightning-tools";
 const invoice = ref('');
-
+const preimage = ref('');
 const payswitch = ref(false);
-
-
-
 
 async function paymentstart() {
   if (ordercheck.value == false) {
@@ -1040,30 +749,41 @@ async function paymentstart() {
     window.scrollTo(0, 0);
   } else {
     payswitch.value = true;
-    if (isShippingVisible.value == true){
-        totalPriceBtc.value = ((store.getTotalPrice() + store.getTotalShippingCost()) * btcprices).toFixed(8);
 
+    // Declare local variable to hold invoice object
+    let lightningInvoice;
 
-        const ln = new LightningAddress(ticker.lightningaddress);
-  await ln.fetch();
-  const response = await ln.requestInvoice({ satoshi: (totalPriceBtc.value * 100000000).toFixed(0) });
-  invoice.value = response.paymentRequest;
+    if (isShippingVisible.value == true) {
+      totalPriceBtc.value = ((store.getTotalPrice() + store.getTotalShippingCost()) * btcprices).toFixed(8);
 
+      const ln = new LightningAddress(ticker.lightningaddress);
+      await ln.fetch();
+      lightningInvoice = await ln.requestInvoice({ satoshi: (totalPriceBtc.value * 100000000).toFixed(0) });
+      invoice.value = lightningInvoice.paymentRequest;
+    } else {
+      payswitch.value = true;
+      totalPriceBtc.value = (store.getTotalPrice() * btcprices).toFixed(8);
+      totalPriceSats.value = (totalPriceBtc.value * 100000000).toFixed(0);
 
+      const ln = new LightningAddress(ticker.lightningaddress);
+      await ln.fetch();
+      lightningInvoice = await ln.requestInvoice({ satoshi: (totalPriceBtc.value * 100000000).toFixed(0) });
+      invoice.value = lightningInvoice.paymentRequest;
+    }
+
+    console.log(`Invoice: ${lightningInvoice.paymentRequest}`);
+    console.log(`Payment hash: ${lightningInvoice.paymentHash}`);
+
+    // Check every few seconds to see if the invoice is paid
+    const checkPaymentInterval = setInterval(async () => {
+      const paid = await lightningInvoice.verifyPayment();
+      if (paid && lightningInvoice.preimage) {
+        console.log(`Preimage: ${lightningInvoice.preimage}`);
+        preimage.value = lightningInvoice.preimage;
+        clearInterval(checkPaymentInterval);
       }
-      else{
-        payswitch.value = true;
-        totalPriceBtc.value = (store.getTotalPrice() * btcprices).toFixed(8);
+    }, 3000);
 
-
-        const ln = new LightningAddress(ticker.lightningaddress);
-  await ln.fetch();
-  const response = await ln.requestInvoice({ satoshi: (totalPriceBtc.value * 100000000).toFixed(0) });
-  invoice.value = response.paymentRequest;
-
-
-
-      }
     // SENDING OFF THE DATA
 
     fetch(data.orderwebhook, {
@@ -1152,8 +872,7 @@ const formData = ref({
 
 const { t } = useI18n({ useScope: "local" });
 </script>
-<i18n lang="json">
-{
+<i18n lang="json">{
   "da": {
     "Shopcart": "Indkøbsvogn",
     "Btcpayment": "Bitcoin Betalingsmetode",
@@ -1203,7 +922,6 @@ const { t } = useI18n({ useScope: "local" });
     "Your_id": "Din ordre med id",
     "finalregister": "er blevet registreret, for at afslutte din ordre bedes du fortsætte med at vælge onchain eller lightning betaling. Når betalingen er verificeret, vil vi sende din ordre hurtigst muligt.",
     "Emptycart": "Det ser ud til, at du ikke har nogen varer i din indkøbskurv"
-
   },
   "de": {
     "Shopcart": "Einkaufswagen",
@@ -1304,7 +1022,6 @@ const { t } = useI18n({ useScope: "local" });
     "Your_id": "Your order with id",
     "finalregister": "has been registered, to finish your order please continue by choosing onchain or lightning payment. Once payment has been verified we will ship your order as soon as possible.",
     "Emptycart": "It seems like you have no items in your shopping cart"
-
   },
   "es": {
     "Shopcart": "Carrito de Compras",
@@ -1355,7 +1072,6 @@ const { t } = useI18n({ useScope: "local" });
     "Your_id": "Su pedido con id",
     "finalregister": "ha sido registrado, para finalizar su pedido, por favor continúe eligiendo el pago onchain o lightning. Una vez verificado el pago, enviaremos su pedido lo antes posible.",
     "Emptycart": "Parece que no tienes artículos en tu carrito de compras"
-
   },
   "fr": {
     "Shopcart": "Chariot",
@@ -1406,7 +1122,6 @@ const { t } = useI18n({ useScope: "local" });
     "Your_id": "Votre commande avec l'ID",
     "finalregister": "a été enregistrée, pour finaliser votre commande, veuillez continuer en choisissant le paiement onchain ou lightning. Une fois le paiement vérifié, nous expédierons votre commande dès que possible.",
     "Emptycart": "Il semble que vous n'avez aucun article dans votre panier"
-
   },
   "nl": {
     "Shopcart": "Winkelwagen",
@@ -1457,7 +1172,6 @@ const { t } = useI18n({ useScope: "local" });
     "Your_id": "Je bestelling met id",
     "finalregister": "is geregistreerd, om je bestelling af te ronden, ga verder door te kiezen voor onchain- of lightningbetaling. Zodra de betaling is geverifieerd, verzenden we je bestelling zo snel mogelijk.",
     "Emptycart": "Het lijkt erop dat je geen items in je winkelwagen hebt"
-
   },
   "pt": {
     "Shopcart": "Carrinho de Compras",
@@ -1508,7 +1222,5 @@ const { t } = useI18n({ useScope: "local" });
     "Your_id": "Seu pedido com id",
     "finalregister": "foi registrado, para finalizar seu pedido por favor continue escolhendo pagamento onchain ou lightning. Assim que o pagamento for verificado, enviaremos seu pedido o mais rápido possível.",
     "Emptycart": "Parece que você não tem itens no seu carrinho de compras"
-
   }
-}
-</i18n>
+}</i18n>
