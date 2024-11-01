@@ -27,6 +27,8 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
+
 const route = useRoute();
 
 // Rendering the index content const slug = "/";

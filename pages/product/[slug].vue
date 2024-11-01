@@ -287,10 +287,11 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
+import { useRoute } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+
 import {
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
   RadioGroup,
   RadioGroupLabel,
   RadioGroupOption,
@@ -300,11 +301,7 @@ import {
   TabPanel,
   TabPanels,
 } from "@headlessui/vue";
-import { StarIcon } from "@heroicons/vue/20/solid";
 import {
-  HeartIcon,
-  MinusIcon,
-  PlusIcon,
   ExclamationTriangleIcon,
 } from "@heroicons/vue/24/outline";
 
@@ -315,12 +312,12 @@ import { useProjectStore } from "~/store/shopcart";
 
 const cartStore = useProjectStore();
 const { addToCart } = cartStore;
-const { cartItems } = storeToRefs(cartStore);
+// const { cartItems } = storeToRefs(cartStore);
 
-const inputVal = ref("");
+// const inputVal = ref("");
 
 const filtersStore = useFiltersStore();
-const { addValueToFilterList } = filtersStore;
+// const { addValueToFilterList } = filtersStore;
 const { filtersList } = storeToRefs(filtersStore);
 
 const variationwarning = ref(false);
@@ -360,7 +357,6 @@ const btcusdprices = Number(btcusdprice.data.rates.USD).toFixed(2);
 import {
   BitcoinIcon,
   SatoshiV2Icon,
-  NoDollarsIcon,
 } from "@bitcoin-design/bitcoin-icons-vue/filled";
 
 import data from "~/config/products";

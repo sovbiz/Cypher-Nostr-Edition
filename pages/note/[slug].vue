@@ -8,7 +8,6 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue';
 import { useRoute } from 'vue-router';
-import { useI18n } from 'vue-i18n';
 import NDK from '@nostr-dev-kit/ndk';
 import setup from "~/config/setup";
 import { bech32 } from "bech32";
@@ -57,5 +56,5 @@ onBeforeMount(async () => {
   console.log(eventContent.value);
 });
 
-const { t } = useI18n({ useScope: "local" });
+// const { t } = useI18n({ useScope: "local" });
 </script>

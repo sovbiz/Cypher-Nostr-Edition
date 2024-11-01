@@ -154,8 +154,6 @@
 
 <script setup>
 import {
-  Disclosure,
-  RadioGroup,
   TabGroup,
   TabList,
   TabPanels,
